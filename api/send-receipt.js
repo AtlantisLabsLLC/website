@@ -5,20 +5,25 @@
 const { Resend } = require('resend');
 
 function buildReceiptHtml(payload) {
-  const { email, address, items, subtotal, discount, shipping, total, couponCode } = payload;
+  const { orderNumber, email, name, address, items, subtotal, discount, shipping, total, couponCode } = payload;
   const lines = (items || []).map(
     (i) => `<tr><td>${escapeHtml(i.name || 'Item')}</td><td>${i.quantity || 1}</td><td>$${(i.price || 0).toFixed(2)}</td><td>$${((i.quantity || 1) * (i.price || 0)).toFixed(2)}</td></tr>`
   ).join('');
   const discountRow = discount > 0 ? `<tr><td colspan="3">Discount</td><td>-$${discount.toFixed(2)}</td></tr>` : '';
   const couponRow = couponCode ? `<tr><td colspan="3">Coupon</td><td>${escapeHtml(couponCode)}</td></tr>` : '';
   const addr = [address?.street, [address?.city, address?.state, address?.zip].filter(Boolean).join(', ')].filter(Boolean).join(', ');
+  const shipToLines = [];
+  if (name) shipToLines.push(`<strong>Name:</strong> ${escapeHtml(name)}`);
+  if (addr) shipToLines.push(`<strong>Shipping address:</strong><br>${escapeHtml(addr)}`);
+  const shipTo = shipToLines.length ? shipToLines.join('<br><br>') : '—';
   return `
 <!DOCTYPE html>
 <html>
 <head><meta charset="utf-8"><title>Order receipt</title></head>
 <body style="font-family: system-ui, sans-serif; max-width: 560px; margin: 0 auto; padding: 24px; color: #1a1a1a;">
   <h1 style="font-size: 1.35rem; margin-bottom: 8px;">Atlantis Labs</h1>
-  <p style="color: #666; margin-bottom: 24px;">Order receipt — for research use only. Not for human consumption.</p>
+  <p style="color: #666; margin-bottom: 4px;">Order receipt — for research use only. Not for human consumption.</p>
+  <p style="font-size: 1rem; font-weight: 600; margin-bottom: 24px; color: #1a1a1a;">Order #${escapeHtml(orderNumber || '—')}</p>
   <p>Thank you for your order. We'll follow up with payment and shipping details.</p>
   <table style="width: 100%; border-collapse: collapse; margin: 20px 0;">
     <thead>
@@ -32,10 +37,17 @@ function buildReceiptHtml(payload) {
       <tr style="font-weight: 700; border-top: 2px solid #333;"><td colspan="3">Total</td><td style="text-align: right;">$${total.toFixed(2)}</td></tr>
     </tbody>
   </table>
-  <p><strong>Ship to</strong><br>${escapeHtml(addr || '—')}</p>
+  <p><strong>Ship to</strong><br><br>${shipTo}</p>
+  ${couponCode ? `<p><strong>Affiliate/Coupon code used:</strong> ${escapeHtml(couponCode)}</p>` : ''}
   <p style="margin-top: 32px; font-size: 0.9rem; color: #666;">If you have questions, reply to this email or contact hello@atlantislabs.com.</p>
 </body>
 </html>`;
+}
+
+function generateOrderNumber() {
+  const timestamp = Date.now().toString(36).toUpperCase();
+  const random = Math.random().toString(36).substring(2, 8).toUpperCase();
+  return `ATL-${timestamp}-${random}`;
 }
 
 function escapeHtml(s) {
@@ -78,8 +90,11 @@ module.exports = async function handler(req, res) {
   }
 
   const resend = new Resend(apiKey);
+  const orderNumber = generateOrderNumber();
   const payload = {
+    orderNumber,
     email,
+    name: (body.name || '').trim(),
     address: body.address || {},
     items: Array.isArray(body.items) ? body.items : [],
     subtotal: Number(body.subtotal) || 0,

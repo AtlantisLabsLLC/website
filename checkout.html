@@ -59,6 +59,10 @@
           <span class="checkout-total-amount" id="checkout-total">$0.00</span>
         </div>
         <div class="checkout-email">
+          <label for="checkout-name-input" class="checkout-email-label">Name</label>
+          <input type="text" id="checkout-name-input" class="checkout-email-input" placeholder="Your name" autocomplete="name">
+        </div>
+        <div class="checkout-email">
           <label for="checkout-email-input" class="checkout-email-label">Email</label>
           <input type="email" id="checkout-email-input" class="checkout-email-input" placeholder="your@email.com" autocomplete="email">
         </div>
@@ -119,7 +123,7 @@
   <script>
     (function () {
       // Site is on Porkbun; receipt API runs on Vercel. Replace with your Vercel project URL after you deploy (e.g. https://atlantis-labs.vercel.app/api/send-receipt).
-      var RECEIPT_API_URL = 'https://YOUR_VERCEL_PROJECT.vercel.app/api/send-receipt';
+      var RECEIPT_API_URL = 'https://website-2vm6.vercel.app/api/send-receipt';
       var COUPONS = {
         'ATLANTIS10': { type: 'percent', value: 10 },
         'SAVE20': { type: 'fixed', value: 20 },
@@ -217,12 +221,14 @@
         totalEl.textContent = '$' + total.toFixed(2);
         if (!cryptoBtn._orderListener) {
           function validateCheckout() {
+            var nameEl = document.getElementById('checkout-name-input');
             var emailEl = document.getElementById('checkout-email-input');
             var confirmEl = document.getElementById('checkout-email-confirm-input');
             var addressEl = document.getElementById('checkout-address-input');
             var cityEl = document.getElementById('checkout-city-input');
             var stateEl = document.getElementById('checkout-state-input');
             var zipEl = document.getElementById('checkout-zip-input');
+            var name = (nameEl && nameEl.value || '').trim();
             var email = (emailEl && emailEl.value || '').trim().toLowerCase();
             var confirm = (confirmEl && confirmEl.value || '').trim();
             var street = (addressEl && addressEl.value || '').trim();
@@ -231,6 +237,8 @@
             var zip = (zipEl && zipEl.value || '').trim().replace(/\s/g, '');
             var emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*\.[a-zA-Z]{2,}$/;
             var fakeEmails = ['test@test.com', 'test@test', 'fake@fake.com', 'asdf@asdf.com', 'user@example.com', 'email@example.com', 'abc@abc.com', 'q@q.com', 'a@a.com', 'x@x.com'];
+            if (!name) return 'Please enter your name.';
+            if (name.length < 2) return 'Please enter a valid name.';
             if (!email) return 'Please enter your email address.';
             if (!emailRegex.test(email)) return 'Please enter a valid email address.';
             if (fakeEmails.indexOf(email) !== -1) return 'Please use a valid email address.';
@@ -267,9 +275,11 @@
             }
             var shipping = (appliedCoupon && appliedCoupon.type === 'freeshipping') ? 0 : 15;
             var total = Math.max(0, subtotal - discount + shipping);
+            var nameEl = document.getElementById('checkout-name-input');
             var emailEl = document.getElementById('checkout-email-input');
             var couponInput = document.getElementById('checkout-coupon-input');
             return {
+              name: (nameEl && nameEl.value || '').trim(),
               email: (emailEl && emailEl.value || '').trim().toLowerCase(),
               address: {
                 street: (document.getElementById('checkout-address-input') && document.getElementById('checkout-address-input').value || '').trim(),
@@ -347,7 +357,7 @@
       document.getElementById('checkout-coupon-input').addEventListener('keydown', function (e) {
         if (e.key === 'Enter') { e.preventDefault(); doApplyCoupon(); }
       });
-      ['checkout-email-input', 'checkout-email-confirm-input', 'checkout-address-input', 'checkout-city-input', 'checkout-state-input', 'checkout-zip-input'].forEach(function (id) {
+      ['checkout-name-input', 'checkout-email-input', 'checkout-email-confirm-input', 'checkout-address-input', 'checkout-city-input', 'checkout-state-input', 'checkout-zip-input'].forEach(function (id) {
         var el = document.getElementById(id);
         if (el) el.addEventListener('input', function () {
           var valEl = document.getElementById('checkout-validation-msg');
