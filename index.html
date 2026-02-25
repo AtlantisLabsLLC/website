@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Atlantis Labs</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <p class="advisory">For research use only. Not for human consumption.</p>
+  <div class="bg-blur" aria-hidden="true"></div>
+  <div class="center-banner" aria-hidden="true"></div>
+  <button type="button" class="cart-trigger" aria-label="Open cart" id="cart-trigger">
+    <svg class="cart-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="9" cy="21" r="1"/>
+      <circle cx="20" cy="21" r="1"/>
+      <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+    </svg>
+    <span class="cart-badge" aria-hidden="true">0</span>
+  </button>
+  <div class="cart-overlay" id="cart-overlay" aria-hidden="true"></div>
+  <aside class="cart-panel" id="cart-panel" aria-label="Shopping cart">
+    <div class="cart-panel-header">
+      <h2 class="cart-panel-title">Cart</h2>
+      <button type="button" class="cart-close" aria-label="Close cart" id="cart-close">&times;</button>
+    </div>
+    <div class="cart-panel-body">
+      <p class="cart-empty">Your cart is empty</p>
+    </div>
+  </aside>
+  <main class="menu-page">
+    <div class="menu-center">
+      <a href="#" class="menu-brand">
+        <span class="menu-brand-wrap">
+          <img src="atlantis-labs-logo.png" alt="Atlantis Labs" class="menu-brand-logo">
+        </span>
+      </a>
+      <p class="menu-time" id="menu-time">—</p>
+      <nav class="menu-nav">
+        <a href="shop.html">SHOP</a>
+        <a href="faq.html">FAQ</a>
+        <a href="affiliate.html">AFFILIATE</a>
+        <a href="#contact">CONTACT</a>
+      </nav>
+      <div class="menu-socials">
+        <a href="#" class="menu-social" aria-label="Instagram">
+          <svg class="social-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+            <circle cx="12" cy="12" r="4"/>
+            <circle cx="18" cy="6" r="1.5" fill="currentColor"/>
+          </svg>
+        </a>
+        <a href="#" class="menu-social" aria-label="TikTok">
+          <svg class="social-icon" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </main>
+
+  <main class="content">
+
+    <section id="about" class="block block--with-divider">
+      <p>Have a question that isn't covered here? We're happy to help. Whether you need guidance on a specific peptide, help with your order, or just want to know more about what we carry, our team is ready to assist. Reach out to us through the contact form on our website and we'll get back to you as soon as possible — typically within one business day.</p>
+    </section>
+
+    <section id="contact" class="block block--contact">
+      <h2>Contact us</h2>
+      <p>Reach out for inquiries, support, or partnerships.</p>
+      <a href="mailto:hello@atlantislabs.com" class="contact-email">hello@atlantislabs.com</a>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p class="footer-copy">© 2026</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shop — Atlantis Labs</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="page-shop">
+  <p class="advisory">For research use only. Not for human consumption.</p>
+  <div class="bg-blur" aria-hidden="true"></div>
+  <div class="center-banner" aria-hidden="true"></div>
+  <button type="button" class="cart-trigger" aria-label="Open cart" id="cart-trigger">
+    <svg class="cart-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="9" cy="21" r="1"/>
+      <circle cx="20" cy="21" r="1"/>
+      <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+    </svg>
+    <span class="cart-badge" aria-hidden="true">0</span>
+  </button>
+  <div class="cart-overlay" id="cart-overlay" aria-hidden="true"></div>
+  <aside class="cart-panel" id="cart-panel" aria-label="Shopping cart">
+    <div class="cart-panel-header">
+      <h2 class="cart-panel-title">Cart</h2>
+      <button type="button" class="cart-close" aria-label="Close cart" id="cart-close">&times;</button>
+    </div>
+    <div class="cart-panel-body">
+      <p class="cart-empty">Your cart is empty</p>
+    </div>
+  </aside>
+
+  <div class="shop-page">
+    <header class="shop-header">
+      <a href="index.html" class="shop-logo-link">
+        <img src="atlantis-labs-logo.png" alt="Atlantis Labs" class="shop-logo-img">
+      </a>
+      <a href="index.html" class="shop-back-link">← Back</a>
+    </header>
+
+    <main class="shop-main">
+      <h1 class="shop-title">Shop</h1>
+      <div class="shop-grid">
+        <article class="shop-card" data-product='{"id":"retatrutide","name":"Retatrutide (10mg/vial)","price":160}'>
+          <h3 class="shop-card-title"><a href="product.html?id=retatrutide" class="shop-card-title-link">Retatrutide</a></h3>
+          <p class="shop-card-strength">10mg/vial</p>
+          <p class="shop-card-price">$160.00</p>
+          <div class="shop-card-qty">
+            <button type="button" class="qty-btn qty-minus" aria-label="Decrease quantity">−</button>
+            <span class="qty-value">1</span>
+            <button type="button" class="qty-btn qty-plus" aria-label="Increase quantity">+</button>
+          </div>
+          <button type="button" class="shop-card-btn">Add to Cart</button>
+        </article>
+        <article class="shop-card" data-product='{"id":"melanotan-ii","name":"MT2 (10mg/vial)","price":40}'>
+          <h3 class="shop-card-title"><a href="product.html?id=melanotan-ii" class="shop-card-title-link">MT2</a></h3>
+          <p class="shop-card-strength">10mg/vial</p>
+          <p class="shop-card-price">$40.00</p>
+          <div class="shop-card-qty">
+            <button type="button" class="qty-btn qty-minus" aria-label="Decrease quantity">−</button>
+            <span class="qty-value">1</span>
+            <button type="button" class="qty-btn qty-plus" aria-label="Increase quantity">+</button>
+          </div>
+          <button type="button" class="shop-card-btn">Add to Cart</button>
+        </article>
+        <article class="shop-card" data-product='{"id":"ghk-cu","name":"GHK-Cu (50mg/vial)","price":200}'>
+          <h3 class="shop-card-title"><a href="product.html?id=ghk-cu" class="shop-card-title-link">GHK-Cu</a></h3>
+          <p class="shop-card-strength">50mg/vial</p>
+          <p class="shop-card-price">$200.00</p>
+          <div class="shop-card-qty">
+            <button type="button" class="qty-btn qty-minus" aria-label="Decrease quantity">−</button>
+            <span class="qty-value">1</span>
+            <button type="button" class="qty-btn qty-plus" aria-label="Increase quantity">+</button>
+          </div>
+          <button type="button" class="shop-card-btn">Add to Cart</button>
+        </article>
+        <article class="shop-card" data-product='{"id":"bpc-tb","name":"BPC 157+TB500 Blend (10mg/vial)","price":150}'>
+          <h3 class="shop-card-title"><a href="product.html?id=bpc-tb" class="shop-card-title-link">BPC 157+TB500 Blend</a></h3>
+          <p class="shop-card-strength">10mg/vial</p>
+          <p class="shop-card-price">$150.00</p>
+          <div class="shop-card-qty">
+            <button type="button" class="qty-btn qty-minus" aria-label="Decrease quantity">−</button>
+            <span class="qty-value">1</span>
+            <button type="button" class="qty-btn qty-plus" aria-label="Increase quantity">+</button>
+          </div>
+          <button type="button" class="shop-card-btn">Add to Cart</button>
+        </article>
+        <article class="shop-card" data-product='{"id":"semax","name":"Semax (10mg/vial)","price":55}'>
+          <h3 class="shop-card-title"><a href="product.html?id=semax" class="shop-card-title-link">Semax</a></h3>
+          <p class="shop-card-strength">10mg/vial</p>
+          <p class="shop-card-price">$55.00</p>
+          <div class="shop-card-qty">
+            <button type="button" class="qty-btn qty-minus" aria-label="Decrease quantity">−</button>
+            <span class="qty-value">1</span>
+            <button type="button" class="qty-btn qty-plus" aria-label="Increase quantity">+</button>
+          </div>
+          <button type="button" class="shop-card-btn">Add to Cart</button>
+        </article>
+        <article class="shop-card" data-product='{"id":"tesamorelin","name":"Tesamorelin (10mg/vial)","price":140}'>
+          <h3 class="shop-card-title"><a href="product.html?id=tesamorelin" class="shop-card-title-link">Tesamorelin</a></h3>
+          <p class="shop-card-strength">10mg/vial</p>
+          <p class="shop-card-price">$140.00</p>
+          <div class="shop-card-qty">
+            <button type="button" class="qty-btn qty-minus" aria-label="Decrease quantity">−</button>
+            <span class="qty-value">1</span>
+            <button type="button" class="qty-btn qty-plus" aria-label="Increase quantity">+</button>
+          </div>
+          <button type="button" class="shop-card-btn">Add to Cart</button>
+        </article>
+        <article class="shop-card" data-product='{"id":"mots-c","name":"MOTS-c (40mg/vial)","price":180}'>
+          <h3 class="shop-card-title"><a href="product.html?id=mots-c" class="shop-card-title-link">MOTS-c</a></h3>
+          <p class="shop-card-strength">40mg/vial</p>
+          <p class="shop-card-price">$180.00</p>
+          <div class="shop-card-qty">
+            <button type="button" class="qty-btn qty-minus" aria-label="Decrease quantity">−</button>
+            <span class="qty-value">1</span>
+            <button type="button" class="qty-btn qty-plus" aria-label="Increase quantity">+</button>
+          </div>
+          <button type="button" class="shop-card-btn">Add to Cart</button>
+        </article>
+        <article class="shop-card" data-product='{"id":"test-item","name":"Test Item","price":5}'>
+          <h3 class="shop-card-title"><a href="product.html?id=test-item" class="shop-card-title-link">Test Item</a></h3>
+          <p class="shop-card-strength">For cart + checkout testing</p>
+          <p class="shop-card-price">$5.00</p>
+          <div class="shop-card-qty">
+            <button type="button" class="qty-btn qty-minus" aria-label="Decrease quantity">−</button>
+            <span class="qty-value">1</span>
+            <button type="button" class="qty-btn qty-plus" aria-label="Increase quantity">+</button>
+          </div>
+          <button type="button" class="shop-card-btn">Add to Cart</button>
+        </article>
+        <article class="shop-card" data-product='{"id":"bac-water","name":"Bacteriostatic Water (10ml)","price":8.99}'>
+          <h3 class="shop-card-title"><a href="product.html?id=bac-water" class="shop-card-title-link">Bac Water</a></h3>
+          <p class="shop-card-price">$8.99</p>
+          <div class="shop-card-qty">
+            <button type="button" class="qty-btn qty-minus" aria-label="Decrease quantity">−</button>
+            <span class="qty-value">1</span>
+            <button type="button" class="qty-btn qty-plus" aria-label="Increase quantity">+</button>
+          </div>
+          <button type="button" class="shop-card-btn">Add to Cart</button>
+        </article>
+      </div>
+    </main>
+
+    <footer class="footer">
+      <p class="footer-copy">© 2026</p>
+    </footer>
+  </div>
+
+  <script src="script.js"></script>
+  <script>
+    document.querySelectorAll('.shop-card').forEach(function (card) {
+      var product = JSON.parse(card.dataset.product || '{}');
+      var qtyEl = card.querySelector('.qty-value');
+      var minusBtn = card.querySelector('.qty-minus');
+      var plusBtn = card.querySelector('.qty-plus');
+      var addBtn = card.querySelector('.shop-card-btn');
+      function getQty() { return parseInt(qtyEl.textContent, 10) || 1; }
+      function setQty(n) { qtyEl.textContent = Math.max(1, n); }
+      minusBtn.addEventListener('click', function () { setQty(getQty() - 1); });
+      plusBtn.addEventListener('click', function () { setQty(getQty() + 1); });
+      addBtn.addEventListener('click', function () {
+        if (window.addToCart) {
+          window.addToCart({ id: product.id, name: product.name, price: product.price, quantity: getQty() });
+          var panel = document.getElementById('cart-panel');
+          if (panel) panel.classList.add('is-open');
+          document.getElementById('cart-overlay').classList.add('is-open');
+          document.body.style.overflow = 'hidden';
+        }
+      });
+    });
+  </script>
+</body>
+</html>

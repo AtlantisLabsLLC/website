@@ -1,0 +1,9 @@
+{
+  "name": "atlantis-labs-website",
+  "version": "1.0.0",
+  "description": "Atlantis Labs site + receipt API",
+  "private": true,
+  "dependencies": {
+    "resend": "^4.0.0"
+  }
+}

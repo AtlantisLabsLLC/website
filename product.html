@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product — Atlantis Labs</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="page-product">
+  <p class="advisory">For research use only. Not for human consumption.</p>
+  <div class="bg-blur" aria-hidden="true"></div>
+  <div class="center-banner" aria-hidden="true"></div>
+  <button type="button" class="cart-trigger" aria-label="Open cart" id="cart-trigger">
+    <svg class="cart-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="9" cy="21" r="1"/>
+      <circle cx="20" cy="21" r="1"/>
+      <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+    </svg>
+    <span class="cart-badge" aria-hidden="true">0</span>
+  </button>
+  <div class="cart-overlay" id="cart-overlay" aria-hidden="true"></div>
+  <aside class="cart-panel" id="cart-panel" aria-label="Shopping cart">
+    <div class="cart-panel-header">
+      <h2 class="cart-panel-title">Cart</h2>
+      <button type="button" class="cart-close" aria-label="Close cart" id="cart-close">&times;</button>
+    </div>
+    <div class="cart-panel-body">
+      <p class="cart-empty">Your cart is empty</p>
+    </div>
+  </aside>
+
+  <div class="product-page">
+    <header class="product-header">
+      <a href="index.html" class="product-logo-link">
+        <img src="atlantis-labs-logo.png" alt="Atlantis Labs" class="product-logo-img">
+      </a>
+      <a href="shop.html" class="product-back-link">← Back to Shop</a>
+    </header>
+
+    <main class="product-main">
+      <div id="product-not-found" class="product-not-found" style="display: none;">
+        <p>Product not found.</p>
+        <a href="shop.html" class="product-shop-link">Return to shop</a>
+      </div>
+      <article id="product-detail" class="product-detail" style="display: none;">
+        <div class="product-image-placeholder">
+          <span class="product-image-placeholder-text">Image</span>
+        </div>
+        <div class="product-info">
+          <h1 class="product-title" id="product-title"></h1>
+          <p class="product-description" id="product-description"></p>
+          <p class="product-disclaimer" id="product-disclaimer"></p>
+          <p class="product-price" id="product-price"></p>
+          <div class="product-qty">
+            <button type="button" class="qty-btn qty-minus" aria-label="Decrease quantity">−</button>
+            <span class="qty-value">1</span>
+            <button type="button" class="qty-btn qty-plus" aria-label="Increase quantity">+</button>
+          </div>
+          <button type="button" class="product-add-btn" id="product-add-btn">Add to Cart</button>
+        </div>
+      </article>
+    </main>
+
+    <footer class="footer">
+      <p class="footer-copy">© 2026</p>
+    </footer>
+  </div>
+
+  <script src="script.js"></script>
+  <script>
+    (function () {
+      var PRODUCTS = {
+        'retatrutide': { id: 'retatrutide', name: 'Retatrutide (10mg/vial)', price: 160, description: '10mg/vial. Lyophilized triple agonist (GLP-1/GIP/glucagon receptors) for in vitro and laboratory metabolic research.', disclaimer: 'Atlantis Labs purity. For research purposes only. Not for human consumption.' },
+        'melanotan-ii': { id: 'melanotan-ii', name: 'MT2 (10mg/vial)', price: 40, description: '10mg/vial. Melanocortin receptor agonist peptide for pigment and receptor research. Lyophilized, laboratory-grade.', disclaimer: 'Atlantis Labs purity. For research purposes only. Not for human consumption.' },
+        'ghk-cu': { id: 'ghk-cu', name: 'GHK-Cu (50mg/vial)', price: 200, description: '50mg/vial. Copper-binding peptide used in tissue and collagen studies. Lyophilized, laboratory-grade.', disclaimer: 'Atlantis Labs purity. For research purposes only. Not for human consumption.' },
+        'bpc-tb': { id: 'bpc-tb', name: 'BPC 157+TB500 Blend (10mg/vial)', price: 150, description: '10mg/vial. Blend of BPC-157 and TB-500 for tissue and angiogenesis research. Lyophilized, laboratory-grade.', disclaimer: 'Atlantis Labs purity. For research purposes only. Not for human consumption.' },
+        'semax': { id: 'semax', name: 'Semax (10mg/vial)', price: 55, description: '10mg/vial. Synthetic ACTH fragment peptide for neurobiological and cognitive research. Lyophilized, laboratory-grade.', disclaimer: 'Atlantis Labs purity. For research purposes only. Not for human consumption.' },
+        'tesamorelin': { id: 'tesamorelin', name: 'Tesamorelin (10mg/vial)', price: 140, description: '10mg/vial. Growth hormone–releasing hormone analog for endocrine and metabolic research. Lyophilized, laboratory-grade.', disclaimer: 'Atlantis Labs purity. For research purposes only. Not for human consumption.' },
+        'mots-c': { id: 'mots-c', name: 'MOTS-c (40mg/vial)', price: 180, description: '40mg/vial. Mitochondrial-derived peptide for cellular and metabolic pathway research. Lyophilized, laboratory-grade.', disclaimer: 'Atlantis Labs purity. For research purposes only. Not for human consumption.' },
+        'bac-water': { id: 'bac-water', name: 'Bacteriostatic Water (10ml)', price: 8.99, description: '10ml bacteriostatic water for peptide reconstitution in laboratory use. Essential for proper storage and handling of research compounds.', disclaimer: 'For research purposes only. Not for human consumption.' },
+        'test-item': { id: 'test-item', name: 'Test Item', price: 5, description: 'Test product for cart and checkout. Remove before launch.', disclaimer: 'For testing purposes only.' }
+      };
+      var params = new URLSearchParams(window.location.search);
+      var id = params.get('id') || '';
+      var product = PRODUCTS[id];
+      var notFoundEl = document.getElementById('product-not-found');
+      var detailEl = document.getElementById('product-detail');
+      if (!product) {
+        notFoundEl.style.display = 'block';
+      } else {
+        detailEl.style.display = 'block';
+        document.title = product.name + ' — Atlantis Labs';
+        document.getElementById('product-title').textContent = product.name;
+        document.getElementById('product-description').textContent = product.description;
+        document.getElementById('product-disclaimer').textContent = product.disclaimer;
+        document.getElementById('product-price').textContent = '$' + product.price.toFixed(2);
+        var qtyEl = detailEl.querySelector('.qty-value');
+        var minusBtn = detailEl.querySelector('.qty-minus');
+        var plusBtn = detailEl.querySelector('.qty-plus');
+        var addBtn = document.getElementById('product-add-btn');
+        function getQty() { return parseInt(qtyEl.textContent, 10) || 1; }
+        function setQty(n) { qtyEl.textContent = Math.max(1, n); }
+        minusBtn.addEventListener('click', function () { setQty(getQty() - 1); });
+        plusBtn.addEventListener('click', function () { setQty(getQty() + 1); });
+        addBtn.addEventListener('click', function () {
+          if (window.addToCart) {
+            window.addToCart({ id: product.id, name: product.name, price: product.price, quantity: getQty() });
+            var panel = document.getElementById('cart-panel');
+            if (panel) panel.classList.add('is-open');
+            document.getElementById('cart-overlay').classList.add('is-open');
+            document.body.style.overflow = 'hidden';
+          }
+        });
+      }
+    })();
+  </script>
+</body>
+</html>

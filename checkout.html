@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checkout — Atlantis Labs</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="page-checkout">
+  <p class="advisory">For research use only. Not for human consumption.</p>
+  <div class="bg-blur" aria-hidden="true"></div>
+  <div class="center-banner" aria-hidden="true"></div>
+
+  <div class="checkout-page">
+    <header class="checkout-header">
+      <a href="index.html" class="checkout-logo-link">
+        <img src="atlantis-labs-logo.png" alt="Atlantis Labs" class="checkout-logo-img">
+      </a>
+      <a href="shop.html" class="checkout-back-link">← Back</a>
+    </header>
+
+    <main class="checkout-main">
+      <h1 class="checkout-title">Checkout</h1>
+      <div id="checkout-empty" class="checkout-empty">
+        <p>Your cart is empty.</p>
+        <a href="shop.html" class="checkout-shop-link">Continue shopping</a>
+      </div>
+      <div id="checkout-success" class="checkout-success" style="display: none;">
+        <p class="checkout-success-title">Order confirmed</p>
+        <p class="checkout-success-text">Thank you. Your order has been received.</p>
+        <a href="shop.html" class="checkout-shop-link">Continue shopping</a>
+      </div>
+      <div id="checkout-summary" class="checkout-summary" style="display: none;">
+        <div class="checkout-items" id="checkout-items"></div>
+        <div class="checkout-subtotal-row">
+          <span class="checkout-subtotal-label">Subtotal</span>
+          <span class="checkout-subtotal-amount" id="checkout-subtotal">$0.00</span>
+        </div>
+        <div class="checkout-coupon">
+          <div class="checkout-coupon-input-wrap">
+            <input type="text" id="checkout-coupon-input" class="checkout-coupon-input" placeholder="Enter coupon code" autocomplete="off">
+            <button type="button" id="checkout-coupon-apply" class="checkout-coupon-btn">Apply</button>
+          </div>
+          <p class="checkout-coupon-message" id="checkout-coupon-message"></p>
+          <div class="checkout-discount-row" id="checkout-discount-row" style="display: none;">
+            <span class="checkout-discount-label">Discount</span>
+            <span class="checkout-discount-amount" id="checkout-discount">-$0.00</span>
+          </div>
+        </div>
+        <div class="checkout-shipping-row">
+          <span class="checkout-shipping-label">Shipping</span>
+          <span class="checkout-shipping-amount" id="checkout-shipping">$15.00</span>
+        </div>
+        <div class="checkout-total-row">
+          <span class="checkout-total-label">Total</span>
+          <span class="checkout-total-amount" id="checkout-total">$0.00</span>
+        </div>
+        <div class="checkout-email">
+          <label for="checkout-email-input" class="checkout-email-label">Email</label>
+          <input type="email" id="checkout-email-input" class="checkout-email-input" placeholder="your@email.com" autocomplete="email">
+        </div>
+        <div class="checkout-email">
+          <label for="checkout-email-confirm-input" class="checkout-email-label">Confirm email</label>
+          <input type="email" id="checkout-email-confirm-input" class="checkout-email-input" placeholder="your@email.com" autocomplete="email">
+          <p class="checkout-email-message" id="checkout-email-message"></p>
+        </div>
+        <div class="checkout-address">
+          <label for="checkout-address-input" class="checkout-address-label">Street address</label>
+          <input type="text" id="checkout-address-input" class="checkout-address-input" placeholder="123 Main St" autocomplete="street-address">
+          <div class="checkout-address-row">
+            <div class="checkout-address-field">
+              <label for="checkout-city-input" class="checkout-address-label">City</label>
+              <input type="text" id="checkout-city-input" class="checkout-address-input" placeholder="City" autocomplete="address-level2">
+            </div>
+            <div class="checkout-address-field">
+              <label for="checkout-state-input" class="checkout-address-label">State</label>
+              <input type="text" id="checkout-state-input" class="checkout-address-input" placeholder="State" autocomplete="address-level1">
+            </div>
+            <div class="checkout-address-field">
+              <label for="checkout-zip-input" class="checkout-address-label">ZIP</label>
+              <input type="text" id="checkout-zip-input" class="checkout-address-input" placeholder="ZIP" autocomplete="postal-code">
+            </div>
+          </div>
+        </div>
+        <p class="checkout-validation-msg" id="checkout-validation-msg"></p>
+        <p class="checkout-note">Choose your payment method. We'll follow up with payment and shipping details.</p>
+        <div class="checkout-payment-buttons">
+          <button type="button" id="checkout-crypto-btn" class="checkout-pay-btn checkout-pay-crypto">
+            <span class="checkout-pay-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9.5 8h5M9.5 12h5M9.5 16h5M7 8v8"/></svg>
+            </span>
+            <span class="checkout-pay-label">Pay with Crypto</span>
+          </button>
+          <button type="button" id="checkout-apple-btn" class="checkout-pay-btn checkout-pay-apple">
+            <span class="checkout-pay-icon">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09l.01-.01zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/></svg>
+            </span>
+            <span class="checkout-pay-label">Apple Pay</span>
+          </button>
+          <button type="button" id="checkout-google-btn" class="checkout-pay-btn checkout-pay-google">
+            <span class="checkout-pay-icon">
+              <svg viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+            </span>
+            <span class="checkout-pay-label">Google Pay</span>
+          </button>
+        </div>
+      </div>
+    </main>
+
+    <footer class="footer">
+      <p class="footer-copy">© 2026</p>
+    </footer>
+  </div>
+
+  <script src="script.js"></script>
+  <script>
+    (function () {
+      // Site is on Porkbun; receipt API runs on Vercel. Replace with your Vercel project URL after you deploy (e.g. https://atlantis-labs.vercel.app/api/send-receipt).
+      var RECEIPT_API_URL = 'https://YOUR_VERCEL_PROJECT.vercel.app/api/send-receipt';
+      var COUPONS = {
+        'ATLANTIS10': { type: 'percent', value: 10 },
+        'SAVE20': { type: 'fixed', value: 20 },
+        'WELCOME15': { type: 'percent', value: 15 },
+        'FREESHIP': { type: 'freeshipping' }
+      };
+      var appliedCoupon = null;
+      function getCart() {
+        return window.getCart ? window.getCart() : (function () {
+          try {
+            var match = document.cookie.match(/(^| )atlantis_cart=([^;]+)/);
+            var raw = match ? decodeURIComponent(match[2]) : null;
+            return raw ? JSON.parse(raw) : [];
+          } catch (e) {
+            return [];
+          }
+        })();
+      }
+      function applyCoupon(code) {
+        var c = (code || '').trim().toUpperCase();
+        if (!c) return null;
+        return COUPONS[c] || null;
+      }
+      function renderCheckout() {
+        var items = getCart();
+        var emptyEl = document.getElementById('checkout-empty');
+        var summaryEl = document.getElementById('checkout-summary');
+        var itemsEl = document.getElementById('checkout-items');
+        var totalEl = document.getElementById('checkout-total');
+        var cryptoBtn = document.getElementById('checkout-crypto-btn');
+        var appleBtn = document.getElementById('checkout-apple-btn');
+        var googleBtn = document.getElementById('checkout-google-btn');
+        itemsEl.innerHTML = '';
+        if (items.length === 0) {
+          emptyEl.style.display = 'block';
+          summaryEl.style.display = 'none';
+          return;
+        }
+        emptyEl.style.display = 'none';
+        summaryEl.style.display = 'block';
+        var subtotalEl = document.getElementById('checkout-subtotal');
+        var couponInput = document.getElementById('checkout-coupon-input');
+        var couponMsg = document.getElementById('checkout-coupon-message');
+        var discountRow = document.getElementById('checkout-discount-row');
+        var discountEl = document.getElementById('checkout-discount');
+        var subtotal = 0;
+        items.forEach(function (item, i) {
+          var qty = item.quantity || 1;
+          var price = item.price || 0;
+          var lineTotal = price * qty;
+          subtotal += lineTotal;
+          var row = document.createElement('div');
+          row.className = 'checkout-item-row';
+          row.dataset.index = i;
+          row.innerHTML =
+            '<span class="checkout-item-name">' + (item.name || 'Item') + '</span>' +
+            '<div class="checkout-item-right">' +
+            '<div class="checkout-qty-controls">' +
+            '<button type="button" class="qty-btn qty-minus" aria-label="Decrease quantity">−</button>' +
+            '<span class="qty-value">' + qty + '</span>' +
+            '<button type="button" class="qty-btn qty-plus" aria-label="Increase quantity">+</button>' +
+            '</div>' +
+            '<span class="checkout-item-price">$' + lineTotal.toFixed(2) + '</span>' +
+            '</div>';
+          itemsEl.appendChild(row);
+        });
+        subtotalEl.textContent = '$' + subtotal.toFixed(2);
+        var discount = 0;
+        if (appliedCoupon) {
+          if (appliedCoupon.type === 'percent') {
+            discount = subtotal * (appliedCoupon.value / 100);
+          } else if (appliedCoupon.type === 'fixed') {
+            discount = Math.min(appliedCoupon.value, subtotal);
+          }
+        }
+        var shipping = (appliedCoupon && appliedCoupon.type === 'freeshipping') ? 0 : 15;
+        var total = Math.max(0, subtotal - discount + shipping);
+        if (discount > 0) {
+          discountRow.style.display = 'flex';
+          discountEl.textContent = '-$' + discount.toFixed(2);
+        } else {
+          discountRow.style.display = 'none';
+        }
+        if (appliedCoupon) {
+          couponMsg.textContent = 'Coupon applied';
+          couponMsg.className = 'checkout-coupon-message is-success';
+        } else if (couponInput && couponInput.value) {
+          couponMsg.textContent = 'Invalid coupon code';
+          couponMsg.className = 'checkout-coupon-message is-error';
+        } else {
+          couponMsg.textContent = '';
+          couponMsg.className = 'checkout-coupon-message';
+        }
+        document.getElementById('checkout-shipping').textContent = '$' + shipping.toFixed(2);
+        totalEl.textContent = '$' + total.toFixed(2);
+        if (!cryptoBtn._orderListener) {
+          function validateCheckout() {
+            var emailEl = document.getElementById('checkout-email-input');
+            var confirmEl = document.getElementById('checkout-email-confirm-input');
+            var addressEl = document.getElementById('checkout-address-input');
+            var cityEl = document.getElementById('checkout-city-input');
+            var stateEl = document.getElementById('checkout-state-input');
+            var zipEl = document.getElementById('checkout-zip-input');
+            var email = (emailEl && emailEl.value || '').trim().toLowerCase();
+            var confirm = (confirmEl && confirmEl.value || '').trim();
+            var street = (addressEl && addressEl.value || '').trim();
+            var city = (cityEl && cityEl.value || '').trim();
+            var state = (stateEl && stateEl.value || '').trim();
+            var zip = (zipEl && zipEl.value || '').trim().replace(/\s/g, '');
+            var emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*\.[a-zA-Z]{2,}$/;
+            var fakeEmails = ['test@test.com', 'test@test', 'fake@fake.com', 'asdf@asdf.com', 'user@example.com', 'email@example.com', 'abc@abc.com', 'q@q.com', 'a@a.com', 'x@x.com'];
+            if (!email) return 'Please enter your email address.';
+            if (!emailRegex.test(email)) return 'Please enter a valid email address.';
+            if (fakeEmails.indexOf(email) !== -1) return 'Please use a valid email address.';
+            if (email !== confirm.toLowerCase()) return 'Email addresses do not match.';
+            if (!street) return 'Please enter your street address.';
+            if (street.length < 5) return 'Please enter a complete street address.';
+            if (!/^\d/.test(street) && !/^(po box|p\.?o\.?\s*box)/i.test(street)) return 'Street address should include a number or P.O. Box.';
+            if (!city) return 'Please enter your city.';
+            if (city.length < 2) return 'Please enter a valid city name.';
+            if (!state) return 'Please enter your state.';
+            if (state.length < 2) return 'Please enter a valid state (e.g. CA or California).';
+            if (!zip) return 'Please enter your ZIP code.';
+            if (!/^\d{5}(-\d{4})?$/.test(zip)) return 'Please enter a valid US ZIP code (5 or 9 digits).';
+            return null;
+          }
+          function clearValidationUI() {
+            var msgEl = document.getElementById('checkout-email-message');
+            var valEl = document.getElementById('checkout-validation-msg');
+            if (msgEl) { msgEl.textContent = ''; msgEl.className = 'checkout-email-message'; }
+            if (valEl) { valEl.textContent = ''; valEl.className = 'checkout-validation-msg'; }
+          }
+          function getOrderPayload() {
+            var cart = getCart();
+            var subtotal = 0;
+            cart.forEach(function (item) {
+              var qty = item.quantity || 1;
+              var price = item.price || 0;
+              subtotal += qty * price;
+            });
+            var discount = 0;
+            if (appliedCoupon) {
+              if (appliedCoupon.type === 'percent') discount = subtotal * (appliedCoupon.value / 100);
+              else if (appliedCoupon.type === 'fixed') discount = Math.min(appliedCoupon.value, subtotal);
+            }
+            var shipping = (appliedCoupon && appliedCoupon.type === 'freeshipping') ? 0 : 15;
+            var total = Math.max(0, subtotal - discount + shipping);
+            var emailEl = document.getElementById('checkout-email-input');
+            var couponInput = document.getElementById('checkout-coupon-input');
+            return {
+              email: (emailEl && emailEl.value || '').trim().toLowerCase(),
+              address: {
+                street: (document.getElementById('checkout-address-input') && document.getElementById('checkout-address-input').value || '').trim(),
+                city: (document.getElementById('checkout-city-input') && document.getElementById('checkout-city-input').value || '').trim(),
+                state: (document.getElementById('checkout-state-input') && document.getElementById('checkout-state-input').value || '').trim(),
+                zip: (document.getElementById('checkout-zip-input') && document.getElementById('checkout-zip-input').value || '').trim()
+              },
+              items: cart.map(function (i) { return { name: i.name, price: i.price, quantity: i.quantity || 1 }; }),
+              subtotal: subtotal,
+              discount: discount,
+              shipping: shipping,
+              total: total,
+              couponCode: (couponInput && couponInput.value || '').trim() || null
+            };
+          }
+          function handlePayment(e) {
+            var cart = getCart();
+            if (cart.length === 0) return;
+            clearValidationUI();
+            var err = validateCheckout();
+            if (err) {
+              document.getElementById('checkout-validation-msg').textContent = err;
+              document.getElementById('checkout-validation-msg').className = 'checkout-validation-msg is-error';
+              return;
+            }
+            var payload = getOrderPayload();
+            var receiptUrl = RECEIPT_API_URL || (window.location.origin + '/api/send-receipt');
+            fetch(receiptUrl, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(payload)
+            }).catch(function () {});
+            if (window.saveCart) window.saveCart([]);
+            document.getElementById('checkout-summary').style.display = 'none';
+            document.getElementById('checkout-success').style.display = 'block';
+          }
+          cryptoBtn.addEventListener('click', handlePayment);
+          appleBtn.addEventListener('click', handlePayment);
+          googleBtn.addEventListener('click', handlePayment);
+          cryptoBtn._orderListener = true;
+        }
+        itemsEl.querySelectorAll('.qty-minus').forEach(function (btn) {
+          btn.addEventListener('click', function () {
+            var idx = parseInt(this.closest('.checkout-item-row').dataset.index, 10);
+            var cart = getCart();
+            var it = cart[idx];
+            var newQty = Math.max(0, (it.quantity || 1) - 1);
+            if (newQty === 0) {
+              cart.splice(idx, 1);
+            } else {
+              it.quantity = newQty;
+            }
+            if (window.saveCart) window.saveCart(cart);
+            renderCheckout();
+          });
+        });
+        itemsEl.querySelectorAll('.qty-plus').forEach(function (btn) {
+          btn.addEventListener('click', function () {
+            var idx = parseInt(this.closest('.checkout-item-row').dataset.index, 10);
+            var cart = getCart();
+            cart[idx].quantity = (cart[idx].quantity || 1) + 1;
+            if (window.saveCart) window.saveCart(cart);
+            renderCheckout();
+          });
+        });
+      }
+      function doApplyCoupon() {
+        var input = document.getElementById('checkout-coupon-input');
+        var code = (input && input.value || '').trim();
+        if (!code) return;
+        appliedCoupon = applyCoupon(code);
+        renderCheckout();
+      }
+      document.getElementById('checkout-coupon-apply').addEventListener('click', doApplyCoupon);
+      document.getElementById('checkout-coupon-input').addEventListener('keydown', function (e) {
+        if (e.key === 'Enter') { e.preventDefault(); doApplyCoupon(); }
+      });
+      ['checkout-email-input', 'checkout-email-confirm-input', 'checkout-address-input', 'checkout-city-input', 'checkout-state-input', 'checkout-zip-input'].forEach(function (id) {
+        var el = document.getElementById(id);
+        if (el) el.addEventListener('input', function () {
+          var valEl = document.getElementById('checkout-validation-msg');
+          if (valEl && valEl.textContent) { valEl.textContent = ''; valEl.className = 'checkout-validation-msg'; }
+        });
+      });
+      renderCheckout();
+    })();
+  </script>
+</body>
+</html>
