@@ -10,9 +10,17 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body class="page-faq">
-  <p class="advisory">For research use only. Not for human consumption.</p>
+  <p class="advisory" aria-live="polite"><span class="advisory-viewport"><span class="advisory-track"></span></span></p>
   <div class="bg-blur" aria-hidden="true"></div>
   <div class="center-banner" aria-hidden="true"></div>
+  <div class="legal-overlay" id="legal-overlay" aria-hidden="true"></div>
+  <aside class="legal-panel" id="legal-panel" aria-label="Legal documents">
+    <div class="legal-panel-header">
+      <h2 class="legal-panel-title" id="legal-panel-title">Legal</h2>
+      <button type="button" class="legal-panel-close" aria-label="Close" id="legal-panel-close">&times;</button>
+    </div>
+    <div class="legal-panel-body" id="legal-panel-body"></div>
+  </aside>
 
   <div class="faq-page">
     <header class="faq-header">
@@ -49,11 +57,21 @@
           <h3>Do you ship research supplies internationally?</h3>
           <p>At this time we ship domestically within the United States only. International orders cannot be fulfilled. For questions about shipping eligibility or research supply orders, contact our support team. All products are for research purposes only. Not for human consumption.</p>
         </article>
+        <article class="faq-item">
+          <h3>What is your refund policy?</h3>
+          <p>For safety and quality control reasons, we do not accept returns of research materials once they have left our facility. We are unable to offer refunds for orders that have been delivered. If your shipment never reaches its destination (e.g., lost in transit or undeliverable), please contact us and we will work with you to either issue a refund or reship the package. This policy helps us maintain the integrity of our products and ensures that materials are handled only under controlled conditions. All products are for research use only. Not for human consumption.</p>
+        </article>
       </div>
     </main>
 
     <footer class="footer">
-      <p class="footer-copy">© 2026</p>
+      <nav class="footer-links">
+        <a href="#" data-legal="privacy">Privacy Policy</a>
+        <a href="#" data-legal="terms">Terms and Conditions</a>
+        <a href="#" data-legal="terms-of-service">Terms of Service</a>
+        <a href="#" data-legal="returns">Returns & Refund Policy</a>
+      </nav>
+      <p class="footer-copy">© 2026. All rights reserved.</p>
     </footer>
   </div>
 

@@ -10,9 +10,17 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body class="page-affiliate">
-  <p class="advisory">For research use only. Not for human consumption.</p>
+  <p class="advisory" aria-live="polite"><span class="advisory-viewport"><span class="advisory-track"></span></span></p>
   <div class="bg-blur" aria-hidden="true"></div>
   <div class="center-banner" aria-hidden="true"></div>
+  <div class="legal-overlay" id="legal-overlay" aria-hidden="true"></div>
+  <aside class="legal-panel" id="legal-panel" aria-label="Legal documents">
+    <div class="legal-panel-header">
+      <h2 class="legal-panel-title" id="legal-panel-title">Legal</h2>
+      <button type="button" class="legal-panel-close" aria-label="Close" id="legal-panel-close">&times;</button>
+    </div>
+    <div class="legal-panel-body" id="legal-panel-body"></div>
+  </aside>
 
   <div class="affiliate-page">
     <header class="affiliate-header">
@@ -23,18 +31,22 @@
     </header>
 
     <main class="affiliate-main">
-      <h1 class="affiliate-title">Become an Atlantian Affiliate</h1>
+      <h1 class="affiliate-title">Become an Affiliate</h1>
       <div class="affiliate-content">
-        <p>Want to save 10% on every single order? Join the Atlantis Labs affiliate program and get your own personalized discount code to share with your audience — and use on every purchase you make yourself.</p>
-        <p>Here's how it works: email us at <a href="mailto:hello@atlantislabs.com" class="contact-email">hello@atlantislabs.com</a> and our team will follow up with you directly to get everything set up. We'll send you your unique code, a few guidelines on how to use it, and everything else you need to start sharing. No lengthy applications, no waiting weeks for approval, no complicated dashboards to figure out. Just a straightforward conversation with a team that actually wants to see you succeed.</p>
-        <p>Whether you're a content creator, a fitness coach, a researcher, or just someone with a passionate audience who trusts your recommendations — if you believe in what we're building at Atlantis Labs, we want you in our corner. Our affiliates are an extension of our brand, and we take that seriously.</p>
-        <p>When you share your code, your audience gets a real discount on research-grade peptides they can trust. Every product we sell is tested for purity and backed by a Certificate of Analysis. So when you put your name behind Atlantis Labs, you're putting it behind something worth recommending.</p>
-        <p>Reach out to us at <a href="mailto:hello@atlantislabs.com" class="contact-email">hello@atlantislabs.com</a> and let's make it official. Welcome to the team — welcome to Atlantis.</p>
+        <p>Hey, are you looking to become an affiliate? We'd love to have you on board. Atlantis Labs offers a 10% commission on every order placed using your unique referral code — so the more you share, the more you earn.</p>
+        <p>Whether you're a content creator, researcher, coach, or just someone with an audience that trusts your recommendations, our affiliate program is designed to be simple and rewarding. You get your own personalized code, share it with your community, and earn commission on every sale.</p>
+        <p>Interested in learning more or getting started? Reach out to us at <a href="mailto:contact@atlantislabs.shop" class="contact-email">contact@atlantislabs.shop</a> to inquire about becoming an affiliate. Our team will get back to you with all the details and help you get set up. We look forward to hearing from you.</p>
       </div>
     </main>
 
     <footer class="footer">
-      <p class="footer-copy">© 2026</p>
+      <nav class="footer-links">
+        <a href="#" data-legal="privacy">Privacy Policy</a>
+        <a href="#" data-legal="terms">Terms and Conditions</a>
+        <a href="#" data-legal="terms-of-service">Terms of Service</a>
+        <a href="#" data-legal="returns">Returns & Refund Policy</a>
+      </nav>
+      <p class="footer-copy">© 2026. All rights reserved.</p>
     </footer>
   </div>
 

@@ -172,7 +172,7 @@
   width: 33.333vw;
   transform: translateX(-50%);
   z-index: 5;
-  padding: 0.5rem 1rem;
+  padding: 0.5rem 0;
   font-size: 0.8rem;
   font-weight: 400;
   letter-spacing: 0.03em;
@@ -180,6 +180,25 @@
   color: rgba(184, 233, 255, 0.75);
   background: rgba(15, 55, 85, 0.6);
   border-bottom: 1px solid rgba(230, 246, 255, 0.06);
+}
+
+.advisory-viewport {
+  display: block;
+  overflow: hidden;
+  white-space: nowrap;
+  height: 1.4em;
+  line-height: 1.4em;
+}
+
+.advisory-track {
+  display: inline-block;
+  white-space: pre;
+  animation: advisory-scroll 45s linear infinite;
+}
+
+@keyframes advisory-scroll {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
 }
 
 .page-shop .advisory,
@@ -423,6 +442,112 @@ body.page-exit {
   color: var(--text);
 }
 
+/* Legal panel — slides in from left */
+.legal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 100;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s, visibility 0.3s;
+}
+
+.legal-overlay.is-open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.legal-panel {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 33.333vw;
+  background: var(--bg);
+  box-shadow: 4px 0 30px rgba(0, 0, 0, 0.2);
+  z-index: 101;
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.legal-panel.is-open {
+  transform: translateX(0);
+}
+
+.legal-panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 2rem;
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+.legal-panel-title {
+  font-size: var(--font-lg);
+  font-weight: 500;
+  color: var(--text);
+}
+
+.legal-panel-close {
+  width: 2rem;
+  height: 2rem;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.legal-panel-close:hover {
+  color: var(--text);
+}
+
+.legal-panel-body {
+  flex: 1;
+  padding: 1.5rem 2rem;
+  overflow-y: auto;
+  font-size: var(--font-base);
+  color: var(--text-muted);
+}
+
+.legal-panel-body .faq-item {
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.legal-panel-body .faq-item:last-child {
+  border-bottom: none;
+}
+
+.legal-panel-body .faq-item h3 {
+  font-size: var(--font-base);
+  font-weight: 500;
+  color: var(--text);
+  margin-bottom: 0.5rem;
+}
+
+.legal-panel-body .faq-item p {
+  font-size: 0.9rem;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.legal-panel-body .contact-email {
+  color: var(--primary);
+  text-decoration: none;
+}
+
+.legal-panel-body .contact-email:hover {
+  text-decoration: underline;
+}
+
 .cart-panel-body {
   flex: 1;
   padding: 2rem;
@@ -465,6 +590,10 @@ body.page-exit {
 .cart-item-price {
   font-size: var(--font-base);
   font-weight: 500;
+  color: var(--primary);
+}
+
+.cart-item-price.cart-item-free {
   color: var(--primary);
 }
 
@@ -1069,6 +1198,12 @@ main.content {
   gap: calc(var(--space-unit) * 1.5);
 }
 
+.checkout-cart {
+  margin-top: calc(var(--space-unit) * 0.5);
+  padding-top: calc(var(--space-unit) * 1.5);
+  border-top: 1px solid var(--border);
+}
+
 .checkout-items {
   display: flex;
   flex-direction: column;
@@ -1240,6 +1375,13 @@ main.content {
   color: var(--text);
 }
 
+.checkout-shipping-was {
+  text-decoration: line-through;
+  margin-right: 0.5rem;
+  opacity: 0.8;
+  color: var(--text-muted);
+}
+
 .checkout-email {
   margin-top: 1.25rem;
 }
@@ -1311,6 +1453,11 @@ main.content {
 .checkout-address-input:focus {
   outline: none;
   border-color: var(--primary);
+}
+
+.checkout-state-select {
+  cursor: pointer;
+  appearance: auto;
 }
 
 .checkout-address-row {
@@ -1883,6 +2030,7 @@ main.content {
   z-index: 1;
   max-width: 33.333vw;
   margin: 0 auto;
+  margin-top: calc(var(--space-unit) * 6);
   padding: calc(var(--space-unit) * 1.5) calc(var(--space-unit) * 1.5) calc(var(--space-unit) * 2);
   text-align: center;
 }
@@ -1895,7 +2043,7 @@ main.content {
 
 .footer-links a {
   font-size: var(--font-base);
-  color: rgba(26, 80, 128, 0.75);
+  color: rgba(184, 233, 255, 0.86);
   text-decoration: none;
 }
 
@@ -1905,7 +2053,7 @@ main.content {
 
 .footer-copy {
   font-size: var(--font-base);
-  color: rgba(26, 80, 128, 0.65);
+  color: rgba(184, 233, 255, 0.74);
 }
 
 /* Mobile — full-width layout */
@@ -1923,6 +2071,10 @@ main.content {
   }
 
   .cart-panel {
+    width: 100%;
+  }
+
+  .legal-panel {
     width: 100%;
   }
 

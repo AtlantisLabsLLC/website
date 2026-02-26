@@ -10,7 +10,7 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body class="page-shop">
-  <p class="advisory">For research use only. Not for human consumption.</p>
+  <p class="advisory" aria-live="polite"><span class="advisory-viewport"><span class="advisory-track"></span></span></p>
   <div class="bg-blur" aria-hidden="true"></div>
   <div class="center-banner" aria-hidden="true"></div>
   <button type="button" class="cart-trigger" aria-label="Open cart" id="cart-trigger">
@@ -30,6 +30,14 @@
     <div class="cart-panel-body">
       <p class="cart-empty">Your cart is empty</p>
     </div>
+  </aside>
+  <div class="legal-overlay" id="legal-overlay" aria-hidden="true"></div>
+  <aside class="legal-panel" id="legal-panel" aria-label="Legal documents">
+    <div class="legal-panel-header">
+      <h2 class="legal-panel-title" id="legal-panel-title">Legal</h2>
+      <button type="button" class="legal-panel-close" aria-label="Close" id="legal-panel-close">&times;</button>
+    </div>
+    <div class="legal-panel-body" id="legal-panel-body"></div>
   </aside>
 
   <div class="shop-page">
@@ -145,7 +153,13 @@
     </main>
 
     <footer class="footer">
-      <p class="footer-copy">© 2026</p>
+      <nav class="footer-links">
+        <a href="#" data-legal="privacy">Privacy Policy</a>
+        <a href="#" data-legal="terms">Terms and Conditions</a>
+        <a href="#" data-legal="terms-of-service">Terms of Service</a>
+        <a href="#" data-legal="returns">Returns & Refund Policy</a>
+      </nav>
+      <p class="footer-copy">© 2026. All rights reserved.</p>
     </footer>
   </div>
 

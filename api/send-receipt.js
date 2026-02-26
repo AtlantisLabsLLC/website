@@ -5,7 +5,7 @@
 const { Resend } = require('resend');
 
 function buildReceiptHtml(payload) {
-  const { orderNumber, email, name, address, items, subtotal, discount, shipping, total, couponCode } = payload;
+  const { orderNumber, email, name, address, items, subtotal, discount, shipping, total, couponCode, logoUrl } = payload;
   const lines = (items || []).map(
     (i) => `<tr><td>${escapeHtml(i.name || 'Item')}</td><td>${i.quantity || 1}</td><td>$${(i.price || 0).toFixed(2)}</td><td>$${((i.quantity || 1) * (i.price || 0)).toFixed(2)}</td></tr>`
   ).join('');
@@ -16,11 +16,13 @@ function buildReceiptHtml(payload) {
   if (name) shipToLines.push(`<strong>Name:</strong> ${escapeHtml(name)}`);
   if (addr) shipToLines.push(`<strong>Shipping address:</strong><br>${escapeHtml(addr)}`);
   const shipTo = shipToLines.length ? shipToLines.join('<br><br>') : '—';
+  const logoBlock = logoUrl ? `<p style="margin-bottom: 16px;"><img src="${logoUrl}" alt="Atlantis Labs" width="160" height="auto" style="max-width: 200px; height: auto; display: block;" /></p>` : '';
   return `
 <!DOCTYPE html>
 <html>
 <head><meta charset="utf-8"><title>Order receipt</title></head>
 <body style="font-family: system-ui, sans-serif; max-width: 560px; margin: 0 auto; padding: 24px; color: #1a1a1a;">
+  ${logoBlock}
   <h1 style="font-size: 1.35rem; margin-bottom: 8px;">Atlantis Labs</h1>
   <p style="color: #666; margin-bottom: 4px;">Order receipt — for research use only. Not for human consumption.</p>
   <p style="font-size: 1rem; font-weight: 600; margin-bottom: 24px; color: #1a1a1a;">Order #${escapeHtml(orderNumber || '—')}</p>
@@ -40,6 +42,7 @@ function buildReceiptHtml(payload) {
   <p><strong>Ship to</strong><br><br>${shipTo}</p>
   ${couponCode ? `<p><strong>Affiliate/Coupon code used:</strong> ${escapeHtml(couponCode)}</p>` : ''}
   <p style="margin-top: 32px; font-size: 0.9rem; color: #666;">If you have questions, reply to this email or contact hello@atlantislabs.com.</p>
+  <p style="margin-top: 24px; padding-top: 20px; border-top: 1px solid #eee; font-size: 0.85rem; color: #555; line-height: 1.5;"><strong>Refund policy:</strong> We do not offer refunds except when a shipment never reaches its destination. In that case, we will work with you to either issue a refund or reship the package. This policy is in place for safety and quality control, as we cannot accept returns of research materials once they have left our facility.</p>
 </body>
 </html>`;
 }
@@ -56,8 +59,36 @@ function escapeHtml(s) {
   return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 }
 
+function getAllowedOrigins() {
+  const raw = process.env.ALLOWED_ORIGINS || '';
+  return raw.split(',').map((o) => o.trim().toLowerCase()).filter(Boolean);
+}
+
+function isAllowedOrigin(req) {
+  const allowed = getAllowedOrigins();
+  if (allowed.length === 0) return true;
+  const raw = (req.headers.origin || req.headers.referer || '').trim();
+  if (!raw) return false;
+  let originHost;
+  try {
+    originHost = new URL(raw).origin.toLowerCase();
+  } catch {
+    originHost = raw.toLowerCase().replace(/\/$/, '');
+  }
+  return allowed.some((a) => {
+    const base = a.replace(/\/$/, '');
+    return originHost === base;
+  });
+}
+
 module.exports = async function handler(req, res) {
-  res.setHeader('Access-Control-Allow-Origin', '*');
+  const allowed = getAllowedOrigins();
+  const origin = (req.headers.origin || '').trim();
+  if (allowed.length > 0 && allowed.includes(origin.replace(/\/$/, '').toLowerCase())) {
+    res.setHeader('Access-Control-Allow-Origin', origin);
+  } else {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+  }
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
@@ -67,6 +98,10 @@ module.exports = async function handler(req, res) {
 
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
+  }
+
+  if (allowed.length > 0 && !isAllowedOrigin(req)) {
+    return res.status(403).json({ error: 'Forbidden' });
   }
 
   const apiKey = process.env.RESEND_API_KEY;
@@ -89,10 +124,13 @@ module.exports = async function handler(req, res) {
     return res.status(400).json({ error: 'Missing email' });
   }
 
+  const siteUrl = (process.env.SITE_URL || '').replace(/\/$/, '').replace(/["'<>]/g, '');
+  const logoUrl = siteUrl ? `${siteUrl}/atlantis-labs-logo.png` : '';
   const resend = new Resend(apiKey);
   const orderNumber = generateOrderNumber();
   const payload = {
     orderNumber,
+    logoUrl,
     email,
     name: (body.name || '').trim(),
     address: body.address || {},
