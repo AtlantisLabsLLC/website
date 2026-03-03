@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Shop — Atlantis Labs</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -21,15 +21,34 @@
     </svg>
     <span class="cart-badge" aria-hidden="true">0</span>
   </button>
+  <button type="button" class="hamburger-trigger" aria-label="Open menu" id="hamburger-trigger">
+    <span class="hamburger-bar"></span>
+    <span class="hamburger-bar"></span>
+    <span class="hamburger-bar"></span>
+  </button>
+  <div class="nav-overlay" id="nav-overlay" aria-hidden="true"></div>
+  <aside class="nav-panel" id="nav-panel" aria-label="Site menu">
+    <div class="nav-panel-header">
+      <h2 class="nav-panel-title">Menu</h2>
+      <button type="button" class="nav-panel-close" aria-label="Close menu" id="nav-panel-close">&times;</button>
+    </div>
+    <nav class="nav-panel-body">
+      <a href="index.html" class="nav-panel-link">HOME</a>
+      <a href="shop.html" class="nav-panel-link">SHOP</a>
+      <a href="faq.html" class="nav-panel-link">FAQ</a>
+      <a href="affiliate.html" class="nav-panel-link">AFFILIATE</a>
+      <a href="index.html#contact" class="nav-panel-link">CONTACT</a>
+    </nav>
+  </aside>
   <div class="cart-overlay" id="cart-overlay" aria-hidden="true"></div>
   <aside class="cart-panel" id="cart-panel" aria-label="Shopping cart">
     <div class="cart-panel-header">
       <h2 class="cart-panel-title">Cart</h2>
       <button type="button" class="cart-close" aria-label="Close cart" id="cart-close">&times;</button>
     </div>
-    <div class="cart-panel-body">
-      <p class="cart-empty">Your cart is empty</p>
-    </div>
+    <div class="cart-progress-wrap" id="cart-progress-wrap" aria-hidden="true"></div>
+    <div class="cart-panel-body"></div>
+    <div class="cart-panel-footer" id="cart-panel-footer" aria-hidden="true"></div>
   </aside>
   <div class="legal-overlay" id="legal-overlay" aria-hidden="true"></div>
   <aside class="legal-panel" id="legal-panel" aria-label="Legal documents">

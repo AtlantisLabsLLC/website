@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Affiliate — Atlantis Labs</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -13,6 +13,43 @@
   <p class="advisory" aria-live="polite"><span class="advisory-viewport"><span class="advisory-track"></span></span></p>
   <div class="bg-blur" aria-hidden="true"></div>
   <div class="center-banner" aria-hidden="true"></div>
+  <button type="button" class="cart-trigger" aria-label="Open cart" id="cart-trigger">
+    <svg class="cart-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="9" cy="21" r="1"/>
+      <circle cx="20" cy="21" r="1"/>
+      <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+    </svg>
+    <span class="cart-badge" aria-hidden="true">0</span>
+  </button>
+  <button type="button" class="hamburger-trigger" aria-label="Open menu" id="hamburger-trigger">
+    <span class="hamburger-bar"></span>
+    <span class="hamburger-bar"></span>
+    <span class="hamburger-bar"></span>
+  </button>
+  <div class="nav-overlay" id="nav-overlay" aria-hidden="true"></div>
+  <aside class="nav-panel" id="nav-panel" aria-label="Site menu">
+    <div class="nav-panel-header">
+      <h2 class="nav-panel-title">Menu</h2>
+      <button type="button" class="nav-panel-close" aria-label="Close menu" id="nav-panel-close">&times;</button>
+    </div>
+    <nav class="nav-panel-body">
+      <a href="index.html" class="nav-panel-link">HOME</a>
+      <a href="shop.html" class="nav-panel-link">SHOP</a>
+      <a href="faq.html" class="nav-panel-link">FAQ</a>
+      <a href="affiliate.html" class="nav-panel-link">AFFILIATE</a>
+      <a href="index.html#contact" class="nav-panel-link">CONTACT</a>
+    </nav>
+  </aside>
+  <div class="cart-overlay" id="cart-overlay" aria-hidden="true"></div>
+  <aside class="cart-panel" id="cart-panel" aria-label="Shopping cart">
+    <div class="cart-panel-header">
+      <h2 class="cart-panel-title">Cart</h2>
+      <button type="button" class="cart-close" aria-label="Close cart" id="cart-close">&times;</button>
+    </div>
+    <div class="cart-progress-wrap" id="cart-progress-wrap" aria-hidden="true"></div>
+    <div class="cart-panel-body"></div>
+    <div class="cart-panel-footer" id="cart-panel-footer" aria-hidden="true"></div>
+  </aside>
   <div class="legal-overlay" id="legal-overlay" aria-hidden="true"></div>
   <aside class="legal-panel" id="legal-panel" aria-label="Legal documents">
     <div class="legal-panel-header">
@@ -34,7 +71,7 @@
       <h1 class="affiliate-title">Become an Affiliate</h1>
       <div class="affiliate-content">
         <p>Hey, are you looking to become an affiliate? We'd love to have you on board. Atlantis Labs offers a 10% commission on every order placed using your unique referral code — so the more you share, the more you earn.</p>
-        <p>Whether you're a content creator, researcher, coach, or just someone with an audience that trusts your recommendations, our affiliate program is designed to be simple and rewarding. You get your own personalized code, share it with your community, and earn commission on every sale.</p>
+        <p>Whether you're a researcher, lab professional, or content creator with an audience interested in in vitro and laboratory research, our affiliate program is designed to be simple and rewarding. You get your own personalized code, share it with your research community, and earn commission on every order.</p>
         <p>Interested in learning more or getting started? Reach out to us at <a href="mailto:contact@atlantislabs.shop" class="contact-email">contact@atlantislabs.shop</a> to inquire about becoming an affiliate. Our team will get back to you with all the details and help you get set up. We look forward to hearing from you.</p>
       </div>
     </main>

@@ -121,7 +121,20 @@
 
   const BAC_WATER_FREE_ID = 'bac-water-free';
   const FREE_BAC_THRESHOLD = 200;
+  const FREE_SHIPPING_THRESHOLD = 250;
   const BAC_WATER_PRICE = 8.99;
+
+  var SHOP_PRODUCTS = [
+    { id: 'retatrutide', name: 'Retatrutide (10mg/vial)', price: 160 },
+    { id: 'melanotan-ii', name: 'MT2 (10mg/vial)', price: 40 },
+    { id: 'ghk-cu', name: 'GHK-Cu (50mg/vial)', price: 200 },
+    { id: 'bpc-tb', name: 'BPC 157+TB500 Blend (10mg/vial)', price: 150 },
+    { id: 'semax', name: 'Semax (10mg/vial)', price: 55 },
+    { id: 'tesamorelin', name: 'Tesamorelin (10mg/vial)', price: 140 },
+    { id: 'mots-c', name: 'MOTS-c (40mg/vial)', price: 180 },
+    { id: 'bac-water', name: 'Bacteriostatic Water (10ml)', price: 8.99 },
+    { id: 'test-item', name: 'Test Item', price: 5 }
+  ];
 
   function getItemLineTotal(item) {
     var qty = item.quantity || 1;
@@ -175,16 +188,59 @@
     });
   }
 
+  function getCartSubtotal(items) {
+    return (items || getCart()).reduce(function (sum, item) { return sum + getItemLineTotal(item); }, 0);
+  }
+
   function renderCart() {
     const body = document.querySelector('.cart-panel-body');
+    const footer = document.getElementById('cart-panel-footer');
+    const progressWrap = document.getElementById('cart-progress-wrap');
     if (!body) return;
     syncPromoItems();
     const items = getCart();
     updateCartBadge();
+
+    var paidSubtotal = getPaidSubtotal(items);
+    var progressPct = 0;
+    var message = '';
+    var isComplete = false;
+    if (paidSubtotal >= FREE_SHIPPING_THRESHOLD) {
+      progressPct = 100;
+      message = 'Free shipping unlocked!';
+      isComplete = true;
+    } else if (paidSubtotal >= FREE_BAC_THRESHOLD) {
+      progressPct = Math.min(100, (paidSubtotal / FREE_SHIPPING_THRESHOLD) * 100);
+      var remaining = FREE_SHIPPING_THRESHOLD - paidSubtotal;
+      message = 'Only $' + remaining.toFixed(2) + ' more for free shipping';
+    } else {
+      progressPct = Math.min(100, (paidSubtotal / FREE_BAC_THRESHOLD) * 100);
+      var remainingBac = FREE_BAC_THRESHOLD - paidSubtotal;
+      message = 'Only $' + remainingBac.toFixed(2) + ' more for free Bac Water';
+    }
     if (items.length === 0) {
-      body.innerHTML = '<p class="cart-empty">Your cart is empty</p>';
+      if (progressWrap) {
+        progressWrap.innerHTML = '';
+        progressWrap.setAttribute('aria-hidden', 'true');
+      }
+      body.innerHTML = '<div class="cart-empty-state"><div class="cart-empty-illustration" aria-hidden="true"><img src="cart-empty-illustration.svg" alt=""></div><p class="cart-empty">Your cart is empty</p></div>';
+      if (footer) {
+        footer.innerHTML = '';
+        footer.setAttribute('aria-hidden', 'true');
+      }
       return;
     }
+
+    if (progressWrap) {
+      progressWrap.innerHTML = '<p class="cart-progress-message">' + message + '</p><div class="cart-progress-bar" role="progressbar" aria-valuenow="' + Math.round(progressPct) + '" aria-valuemin="0" aria-valuemax="100" aria-label="' + message + '"><div class="cart-progress-track"><div class="cart-progress-fill" style="width:' + progressPct + '%"></div></div></div>';
+      progressWrap.classList.toggle('cart-progress-complete', isComplete);
+      progressWrap.removeAttribute('aria-hidden');
+    }
+    var recommended = SHOP_PRODUCTS.filter(function (p) {
+      var inCart = items.some(function (i) { return i.id === p.id || (p.id === 'bac-water' && i.id === BAC_WATER_FREE_ID); });
+      return !inCart;
+    });
+
     body.innerHTML = items.map(function (item, i) {
       const qty = item.quantity || 1;
       return (
@@ -201,8 +257,31 @@
         '<button type="button" class="cart-item-remove" aria-label="Remove">×</button>' +
         '</div>'
       );
-    }).join('') +
-      '<div class="cart-panel-footer"><a href="checkout.html" class="cart-checkout-btn">Checkout</a></div>';
+    }).join('') + (recommended.length > 0 ? (
+      '<div class="cart-recommendations">' +
+      '<h3 class="cart-recommendations-title">You might also like</h3>' +
+      '<div class="cart-recommendations-list">' +
+      recommended.slice(0, 3).map(function (p) {
+        return (
+          '<div class="cart-rec-card" data-product-id="' + p.id + '">' +
+          '<a href="product.html?id=' + encodeURIComponent(p.id) + '" class="cart-rec-image-wrap">' +
+          '<span class="cart-rec-image" aria-hidden="true">Image</span>' +
+          '</a>' +
+          '<div class="cart-rec-info">' +
+          '<a href="product.html?id=' + encodeURIComponent(p.id) + '" class="cart-rec-name">' + (p.name || p.id) + '</a>' +
+          '<p class="cart-rec-price">$' + (p.price || 0).toFixed(2) + '</p>' +
+          '<button type="button" class="cart-rec-add-btn">Add to Cart</button>' +
+          '</div>' +
+          '</div>'
+        );
+      }).join('') +
+      '</div></div>'
+    ) : '');
+    if (footer) {
+      var subtotal = getCartSubtotal(items);
+      footer.innerHTML = '<span class="cart-subtotal">Subtotal: $' + subtotal.toFixed(2) + '</span><a href="checkout.html" class="cart-checkout-btn">Checkout</a>';
+      footer.removeAttribute('aria-hidden');
+    }
     body.querySelectorAll('.cart-item-remove').forEach(function (btn) {
       btn.addEventListener('click', function () {
         const idx = parseInt(this.closest('.cart-item').dataset.index, 10);
@@ -234,6 +313,16 @@
         const item = cart[idx];
         item.quantity = (item.quantity || 1) + 1;
         saveCart(cart);
+        renderCart();
+      });
+    });
+    body.querySelectorAll('.cart-rec-add-btn').forEach(function (btn) {
+      btn.addEventListener('click', function (e) {
+        e.preventDefault();
+        var card = this.closest('.cart-rec-card');
+        var id = card && card.getAttribute('data-product-id');
+        var p = SHOP_PRODUCTS.filter(function (x) { return x.id === id; })[0];
+        if (p && window.addToCart) window.addToCart({ id: p.id, name: p.name, price: p.price, quantity: 1 });
         renderCart();
       });
     });
@@ -349,6 +438,34 @@
   if (overlay) overlay.addEventListener('click', closeLegal);
 })();
 
+// Nav panel (hamburger menu) — non-home pages
+(function () {
+  const trigger = document.getElementById('hamburger-trigger');
+  const panel = document.getElementById('nav-panel');
+  const overlay = document.getElementById('nav-overlay');
+  const close = document.getElementById('nav-panel-close');
+
+  function openNav() {
+    if (!panel || !overlay) return;
+    panel.classList.add('is-open');
+    overlay.classList.add('is-open');
+    overlay.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeNav() {
+    if (!panel || !overlay) return;
+    panel.classList.remove('is-open');
+    overlay.classList.remove('is-open');
+    overlay.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
+
+  if (trigger) trigger.addEventListener('click', openNav);
+  if (close) close.addEventListener('click', closeNav);
+  if (overlay) overlay.addEventListener('click', closeNav);
+})();
+
 // Menu timestamp (e.g. 02/22/2026 10:34 PM EST)
 function updateMenuTime() {
   const el = document.getElementById('menu-time');
@@ -373,18 +490,15 @@ document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
     const href = this.getAttribute('href');
     if (href === '#') return;
     var target = document.querySelector(href);
-    // On home page, scrolling to #contact: center the intro paragraph + contact section in the viewport
+    // On home page, scrolling to #contact: center the whole contact section in the viewport
     if (href === '#contact' && target) {
-      var about = document.getElementById('about');
-      if (about) {
-        e.preventDefault();
-        var aboutTop = about.getBoundingClientRect().top + window.pageYOffset;
-        var contactBottom = target.getBoundingClientRect().bottom + window.pageYOffset;
-        var centerY = (aboutTop + contactBottom) / 2;
-        var scrollTop = centerY - window.innerHeight / 2;
-        window.scrollTo({ top: Math.max(0, scrollTop), behavior: 'smooth' });
-        return;
-      }
+      e.preventDefault();
+      var targetTop = target.getBoundingClientRect().top + window.pageYOffset;
+      var targetHeight = target.offsetHeight;
+      var centerY = targetTop + targetHeight / 2;
+      var scrollTop = centerY - window.innerHeight / 2;
+      window.scrollTo({ top: Math.max(0, scrollTop), behavior: 'smooth' });
+      return;
     }
     if (target) {
       e.preventDefault();
@@ -409,3 +523,23 @@ document.addEventListener('click', function (e) {
   document.body.classList.add('page-exit');
   setTimeout(function () { window.location.href = href; }, 250);
 });
+
+// Scroll-driven gradient for text
+(function () {
+  function updateScrollGradient() {
+    var scrollY = window.scrollY || window.pageYOffset;
+    var docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    var progress = docHeight > 0 ? Math.min(scrollY / docHeight, 1) : 0;
+    document.documentElement.style.setProperty('--scroll-gradient', progress * 400);
+  }
+  function onScroll() {
+    if (window._scrollRaf) return;
+    window._scrollRaf = requestAnimationFrame(function () {
+      updateScrollGradient();
+      window._scrollRaf = null;
+    });
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', updateScrollGradient);
+  updateScrollGradient();
+})();

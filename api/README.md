@@ -11,6 +11,7 @@ Serverless endpoint that sends an order receipt email when checkout is completed
 2. **Environment variables** (set in Vercel → Project → Settings → Environment Variables)
    - `RESEND_API_KEY` — your Resend API key (required).
    - `RECEIPT_FROM_EMAIL` — optional; e.g. `Atlantis Labs <orders@yourdomain.com>`. If unset, uses Resend’s onboarding address (for testing only).
+   - `RECEIPT_COPY_EMAIL` — optional; your company email (e.g. `orders@atlantislabs.shop`). When set, a copy of every receipt is sent to this address in addition to the customer.
    - `SITE_URL` — optional; your live site URL (e.g. `https://atlantislabs.shop`) so the receipt email can show your logo. No trailing slash.
    - `ALLOWED_ORIGINS` — optional but recommended; comma-separated list of origins that may call the API (e.g. `https://atlantislabs.shop,https://www.atlantislabs.shop`). If set, requests from other origins (e.g. curl, other sites) are rejected with 403. Reduces API abuse.
 

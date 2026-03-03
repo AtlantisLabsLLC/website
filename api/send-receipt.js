@@ -41,8 +41,8 @@ function buildReceiptHtml(payload) {
   </table>
   <p><strong>Ship to</strong><br><br>${shipTo}</p>
   ${couponCode ? `<p><strong>Affiliate/Coupon code used:</strong> ${escapeHtml(couponCode)}</p>` : ''}
-  <p style="margin-top: 32px; font-size: 0.9rem; color: #666;">If you have questions, reply to this email or contact hello@atlantislabs.com.</p>
-  <p style="margin-top: 24px; padding-top: 20px; border-top: 1px solid #eee; font-size: 0.85rem; color: #555; line-height: 1.5;"><strong>Refund policy:</strong> We do not offer refunds except when a shipment never reaches its destination. In that case, we will work with you to either issue a refund or reship the package. This policy is in place for safety and quality control, as we cannot accept returns of research materials once they have left our facility.</p>
+  <p style="margin-top: 32px; font-size: 0.9rem; color: #666;">If you have questions, reply to this email or contact contact@atlantislabs.shop.</p>
+  <p style="margin-top: 24px; padding-top: 20px; border-top: 1px solid #eee; font-size: 0.85rem; color: #555; line-height: 1.5;"><strong>Returns &amp; Refund Policy:</strong> All sales are final once an order has been processed and shipped. We do not accept returns of research materials once they have left our facility. Opened products cannot be returned under any circumstance. We are unable to offer refunds for orders that have been delivered. Exceptions: If your shipment never reaches its destination (lost in transit or undeliverable), contact us for a refund or reship. If your order arrives damaged during transit, contact us within 2 days of delivery with your order number and photos; we will replace damaged items at no cost. If an incorrect item was shipped or your order is incomplete, notify us within 2 days with proof and we will correct it at no cost. Refunds or replacements are not offered when products have been opened, used, or tampered with; when orders are seized or delayed by customs; or when packages are lost due to incorrect shipping information. Contact contact@atlantislabs.shop with order details for support; we respond within 1–2 business days.</p>
 </body>
 </html>`;
 }
@@ -144,10 +144,13 @@ module.exports = async function handler(req, res) {
 
   const html = buildReceiptHtml(payload);
 
+  const copyEmail = (process.env.RECEIPT_COPY_EMAIL || '').trim().toLowerCase();
+  const toRecipients = copyEmail ? [email, copyEmail] : [email];
+
   try {
     const { data, error } = await resend.emails.send({
       from: fromEmail,
-      to: email,
+      to: toRecipients,
       subject: 'Your Atlantis Labs order receipt',
       html
     });

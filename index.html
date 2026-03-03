@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Home | Atlantis Labs</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -27,9 +27,9 @@
       <h2 class="cart-panel-title">Cart</h2>
       <button type="button" class="cart-close" aria-label="Close cart" id="cart-close">&times;</button>
     </div>
-    <div class="cart-panel-body">
-      <p class="cart-empty">Your cart is empty</p>
-    </div>
+    <div class="cart-progress-wrap" id="cart-progress-wrap" aria-hidden="true"></div>
+    <div class="cart-panel-body"></div>
+    <div class="cart-panel-footer" id="cart-panel-footer" aria-hidden="true"></div>
   </aside>
   <div class="legal-overlay" id="legal-overlay" aria-hidden="true"></div>
   <aside class="legal-panel" id="legal-panel" aria-label="Legal documents">
@@ -72,11 +72,51 @@
 
   <main class="content">
 
-    <section id="about" class="block block--with-divider">
-      <p>Need guidance on a specific peptide, help with your order, or more info about what we carry? Our team is here to assist.</p>
+    <hr class="content-divider" aria-hidden="true">
+
+    <section class="block block--features">
+      <div class="features-grid">
+        <article class="feature-card">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+              <path d="M9 12l2 2 4-4"/>
+            </svg>
+          </div>
+          <h3 class="feature-title">Lab-Verified Quality</h3>
+          <p class="feature-desc">Third-party testing and certificates of analysis for every batch.</p>
+        </article>
+        <article class="feature-card">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+              <path d="M14 2v6h6"/>
+              <path d="M16 13H8"/>
+              <path d="M16 17H8"/>
+              <path d="M10 9H8"/>
+              <circle cx="17" cy="15" r="3"/>
+              <path d="M18.5 16.5L20 18"/>
+            </svg>
+          </div>
+          <h3 class="feature-title">Clear Traceability</h3>
+          <p class="feature-desc">Batch-level documentation and labeling so you know exactly what you're getting.</p>
+        </article>
+        <article class="feature-card">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/>
+              <rect x="9" y="3" width="6" height="4" rx="2"/>
+              <path d="M9 12l2 2 4-4"/>
+            </svg>
+          </div>
+          <h3 class="feature-title">Rigorous Compliance</h3>
+          <p class="feature-desc">Protocols designed to protect researchers and affiliate partners alike.</p>
+        </article>
+      </div>
     </section>
 
     <section id="contact" class="block block--contact">
+      <p>Need guidance on a specific peptide, help with your order, or more info about what we carry? Our team is here to assist.</p>
       <h2>Contact us</h2>
       <p>Reach out for inquiries, support, or partnerships.</p>
       <a href="mailto:contact@atlantislabs.shop" class="contact-email">contact@atlantislabs.shop</a>
@@ -92,6 +132,8 @@
     </nav>
     <p class="footer-copy">© 2026. All rights reserved.</p>
   </footer>
+
+  <span class="version-label" aria-hidden="true">v1.1</span>
 
   <script src="script.js"></script>
 </body>

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Checkout — Atlantis Labs</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -13,6 +13,25 @@
   <p class="advisory" aria-live="polite"><span class="advisory-viewport"><span class="advisory-track"></span></span></p>
   <div class="bg-blur" aria-hidden="true"></div>
   <div class="center-banner" aria-hidden="true"></div>
+  <button type="button" class="hamburger-trigger" aria-label="Open menu" id="hamburger-trigger">
+    <span class="hamburger-bar"></span>
+    <span class="hamburger-bar"></span>
+    <span class="hamburger-bar"></span>
+  </button>
+  <div class="nav-overlay" id="nav-overlay" aria-hidden="true"></div>
+  <aside class="nav-panel" id="nav-panel" aria-label="Site menu">
+    <div class="nav-panel-header">
+      <h2 class="nav-panel-title">Menu</h2>
+      <button type="button" class="nav-panel-close" aria-label="Close menu" id="nav-panel-close">&times;</button>
+    </div>
+    <nav class="nav-panel-body">
+      <a href="index.html" class="nav-panel-link">HOME</a>
+      <a href="shop.html" class="nav-panel-link">SHOP</a>
+      <a href="faq.html" class="nav-panel-link">FAQ</a>
+      <a href="affiliate.html" class="nav-panel-link">AFFILIATE</a>
+      <a href="index.html#contact" class="nav-panel-link">CONTACT</a>
+    </nav>
+  </aside>
   <div class="legal-overlay" id="legal-overlay" aria-hidden="true"></div>
   <aside class="legal-panel" id="legal-panel" aria-label="Legal documents">
     <div class="legal-panel-header">
@@ -42,7 +61,9 @@
         <a href="shop.html" class="checkout-shop-link">Continue shopping</a>
       </div>
       <div id="checkout-summary" class="checkout-summary" style="display: none;">
+        <div class="checkout-layout">
         <div class="checkout-info">
+          <h2 class="checkout-section-title">Contact & shipping</h2>
           <div class="checkout-email">
             <label for="checkout-name-input" class="checkout-email-label">Name</label>
             <input type="text" id="checkout-name-input" class="checkout-email-input" placeholder="Your name" autocomplete="name">
@@ -62,12 +83,12 @@
             <div class="checkout-address-row">
               <div class="checkout-address-field">
                 <label for="checkout-city-input" class="checkout-address-label">City</label>
-                <input type="text" id="checkout-city-input" class="checkout-address-input" placeholder="City" autocomplete="address-level2">
+                <input type="text" id="checkout-city-input" class="checkout-address-input" placeholder="e.g. Your city" autocomplete="address-level2">
               </div>
               <div class="checkout-address-field">
                 <label for="checkout-state-input" class="checkout-address-label">State</label>
                 <select id="checkout-state-input" class="checkout-address-input checkout-state-select" autocomplete="address-level1">
-                  <option value="">Select state</option>
+                  <option value="">e.g. Your state</option>
                   <option value="AL">Alabama</option>
                   <option value="AK">Alaska</option>
                   <option value="AZ">Arizona</option>
@@ -123,13 +144,14 @@
               </div>
               <div class="checkout-address-field">
                 <label for="checkout-zip-input" class="checkout-address-label">ZIP</label>
-                <input type="text" id="checkout-zip-input" class="checkout-address-input" placeholder="ZIP" autocomplete="postal-code">
+                <input type="text" id="checkout-zip-input" class="checkout-address-input" placeholder="e.g. 12345" autocomplete="postal-code">
               </div>
             </div>
           </div>
           <p class="checkout-validation-msg" id="checkout-validation-msg"></p>
         </div>
-        <div class="checkout-cart">
+        <aside class="checkout-cart">
+          <h2 class="checkout-section-title">Order summary</h2>
           <div class="checkout-items" id="checkout-items"></div>
           <div class="checkout-subtotal-row">
             <span class="checkout-subtotal-label">Subtotal</span>
@@ -154,7 +176,9 @@
             <span class="checkout-total-label">Total</span>
             <span class="checkout-total-amount" id="checkout-total">$0.00</span>
           </div>
+        </aside>
         </div>
+        <div class="checkout-payment-section">
         <p class="checkout-note">Choose your payment method. We'll follow up with payment and shipping details.</p>
         <div class="checkout-payment-buttons">
           <button type="button" id="checkout-crypto-btn" class="checkout-pay-btn checkout-pay-crypto">
@@ -175,6 +199,7 @@
             </span>
             <span class="checkout-pay-label">Google Pay</span>
           </button>
+        </div>
         </div>
       </div>
     </main>
